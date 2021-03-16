@@ -1,0 +1,40 @@
+##################################################################
+# Dockercomposer to build NEXT QS API QUEUES                     
+# INSTALL DOCKER COMPOSE: https://docs.docker.com/compose/install/
+##################################################################
+
+version: '3'
+services:
+  next.redis:
+    container_name: next.redis
+    image: redis
+    command: redis-server --requirepass redis1234
+    ports: 
+      - 6379:6379 
+  next.agend.mongo:
+    container_name: next.agend.mongo
+    image: mongo:4.2
+    volumes:
+      - ../next.db/agend:/data/db
+    ports:
+      - 27017:27017
+    command: ["--auth", "--storageEngine", "wiredTiger"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: abc123
+  agend:
+    container_name: agend
+    tty: true
+    # command: npm start
+    image: nextqs/next.api.nodejs
+    working_dir: /var/node
+    volumes:
+      - ../agend:/var/node
+    depends_on:
+      - next.redis
+      - next.agend.mongo
+    links:
+      - next.redis:redis
+      - next.agend.mongo:mongo-agend
+      
+  
