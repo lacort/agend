@@ -28,6 +28,10 @@ services:
     # command: npm start
     image: nextqs/next.api.nodejs
     working_dir: /var/node
+    ports: 
+      - 8080:8080
+      - 8081:8081
+      - 3000:3000
     volumes:
       - ../agend:/var/node
     depends_on:

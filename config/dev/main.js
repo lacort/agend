@@ -1,4 +1,6 @@
 module.exports = {
+    // WEBSOCKET 
+    'allowed_origin': 'http://127.0.0.1:8887',
 
     //REDIS CONFIG - DB3 - WEBSOCKET
     'redis_3': {
@@ -24,5 +26,12 @@ module.exports = {
             'sslKey': ''
         }
     },
+     //WORKERKEY
+     'websocket_agend':{
+        'port': 8081,
+        'headers': {
+            "X-NextQS-WS-AcessKey": "y25!e5@s19#h8u21%a1m13*a1s19h8i9+a1"
+          } 
+        }
 
 };

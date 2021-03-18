@@ -13,11 +13,12 @@ class AgendaTeste {
         const client = await MongoClient.connect(objConfig.db_agend.strConnection, objConfig.db_agend.options);
         this.agenda = await new Agenda({
             maxConcurrency: 20000,
-            processEvery: "10 seconds"
+            processEvery: "10 seconds",
+            defaultLockLifetime : 0
         }).mongo(client.db("nextAgend"), "jobs");
 
         this.agenda.define('nextAgenda', async job => {
-            console.log('hello, World!', job.attrs.data.message);
+            console.log('Send msg, id:', job.attrs.data.id);
             
 
         });
@@ -28,7 +29,7 @@ class AgendaTeste {
     async schedule(intTime, strName, objData) {
 
         this.agenda.schedule(new Date(Date.now() + intTime), strName, objData)
-        //this.agenda.start();
+       
 
     }
 
@@ -44,7 +45,8 @@ class AgendaTeste {
         job[0].attrs.nextRunAt = new Date(Date.now() + intTime);
         
         await job[0].save()
-        console.log(job[0].attrs)
+        //console.log(job[0].attrs)
+        
     }
 
 }

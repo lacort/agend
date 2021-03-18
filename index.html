@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Monitor</title>
+</head>
+
+<body>
+    <h1>Socket.io</h1>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <div id="msgs"></div>
+    <script>
+        const socket = io();
+        socket.on('connect', function () {
+            $("#msgs").append('connected with id: ' + socket.id + '<br>');
+        });
+
+        socket.on('msg', function (msg) {
+            $("#msgs").append('connected with id: ' + msg.payload.account_id + '<br>');
+        });
+    </script>
+    <script>
+        function Agenda() {
+            var msg = {};
+            msg.data = {};
+            msg.action = 'Agenda'
+            msg.time = $('#timeAgend').val();
+            msg.name = $('#nameAgend').val();
+            msg.data.id = $('#dataAgend').val();
+            // console.log(msg);
+            socket.emit('msg', msg);
+        }
+        function Update() {
+            var msg = {};
+            msg.action = 'Update'
+            msg.time = $('#timeUpdate').val();
+            msg.name = $('#nameUpdate').val();
+            msg.data = $('#repetUpdate').val();
+            //console.log(msg);
+            socket.emit('msg', msg);
+        }
+    </script>
+
+    <form>
+        <div>
+            <label for="name" class="col-sm-3 control-label">Tempo</label>
+            <input type="text" name="texto" id="timeAgend">
+            <label for="name" class="col-sm-3 control-label">Nome</label>
+            <input type="text" name="texto" id="nameAgend">
+            <label for="name" class="col-sm-3 control-label">Dados</label>
+            <input type="text" name="texto" id="dataAgend">
+            <button type="button" onClick="Agenda()">Enviar</button>
+            <hr>
+        </div>
+        <div>
+            <label for="name" class="col-sm-3 control-label">Tempo</label>
+            <input type="text" name="texto" id="timeUpdate">
+            <label for="name" class="col-sm-3 control-label">Nome</label>
+            <input type="text" name="texto" id="nameUpdate">
+            <label for="name" class="col-sm-3 control-label">Repetir</label>
+            <input type="text" name="texto" id="repetUpdate">
+            <button type="button" onClick="Update()">Enviar</button>
+        </div>
+    </form>
+
+</body>
+
+</html>
