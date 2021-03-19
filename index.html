@@ -45,6 +45,13 @@
             //console.log(msg);
             socket.emit('msg', msg);
         }
+        function MultJobs() {
+            var msg = {};
+            msg.action = 'MultJobs'
+            msg.time = $('#timeMult').val();
+            //console.log(msg);
+            socket.emit('msg', msg);
+        }
     </script>
 
     <form>
@@ -66,6 +73,13 @@
             <label for="name" class="col-sm-3 control-label">Repetir</label>
             <input type="text" name="texto" id="repetUpdate">
             <button type="button" onClick="Update()">Enviar</button>
+            <hr>
+        </div>
+        <div>
+            <label for="name" class="col-sm-3 control-label">Data</label>
+            <input type="text" name="texto" id="timeMult">
+            
+            <button type="button" onClick="MultJobs()">Enviar</button>
         </div>
     </form>
 

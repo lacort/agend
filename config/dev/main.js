@@ -13,7 +13,7 @@ module.exports = {
 
     // MONGO DB QUEUES CONFIG
     'db_agend': {
-        'strConnection': 'mongodb://agend:1234@mongo-agend:27017/nextAgend',
+        'strConnection':'mongodb://localhost:27017' ,// 'mongodb://agend:1234@mongo-agend:27017/nextAgend',
         'options': {
             'keepAlive': true,
             'keepAliveInitialDelay': 300000,

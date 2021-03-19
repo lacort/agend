@@ -18,16 +18,16 @@ class AgendaTeste {
             maxConcurrency: 2000,
             processEvery: "10 seconds",
             defaultLockLifetime: 0
-        }).mongo(client.db("nextAgend"), "jobs");
-
+        }).mongo(client.db("nextAgend2"), "jobs");
+        this.agenda.cancel({name:'nextAgenda'})
         this.agenda.define('nextAgenda', async job => {
             let dateNow = new Date(Date.now())
-            let data = `Agend1 Agendado: ${job.attrs.lastRunAt}, id: ${job.attrs.data.id} \n`
+            let data = `Agend2 Agendado: ${job.attrs.lastRunAt}, id: ${job.attrs.data.id}  \n`
             //console.log(data)
             logger.error(data)
 
         });
-        this.agenda.cancel({name:'nextAgenda'})
+        
 
         await new Promise(resolve => this.agenda.once('ready', resolve));
         this.agenda.start()
@@ -55,8 +55,7 @@ class AgendaTeste {
 
     }
     async multJobs(date){
-        console.log('agenda1')
-
+        console.log('agenda2')
         let dateFix = new Date('2021-03-18T23:55:03.904Z');
         let b;
         for (b = 0; b < 50; b++) {
@@ -64,16 +63,18 @@ class AgendaTeste {
             this.agenda.schedule(dateFix, 'nextAgenda', {
                 id: b + 1
             })
+            console.log('for1  ' + b)
         }
-       
         let i;
         for (i = 50; i < 200; i++) {
-            let time = i * 1500;
+            let time = i * 500;
             this.agenda.schedule(new Date(Date.now() + time), 'nextAgenda', {
                 id: i + 1
             })
+            console.log('for2  ' + i)
         }
         
+       
 
     }
 
